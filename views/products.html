@@ -1,0 +1,28 @@
+<!-- Page Content -->
+<div class="container" ng-init="clearOrderdedItems()">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Products</h1>
+        </div>
+    </div>
+    <!-- /.row -->
+    <!-- Products List -->
+    <div class="row">
+        <div class="col-md-4" ng-repeat="product in products | orderBy:'name' | filter:search">
+            <img class="img-responsive" src="http://placehold.it/750x450">
+            <h3>{{product.name}}</h3>
+            <p>{{product.description}}</p>
+            <div class="col-md-8">Price : <strong>{{product.price | currency}}</strong></div>
+            <div class="col-md-4">
+                <a href="" class="btn btn-primary" ng-click="addProductToCart(product.sku, product.name, product.price, 1)">Add To Cart</a>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</div>
+<style>
+    .col-md-4{
+        margin-bottom: 1%;
+    }
+</style>
+<!-- /.container -->

@@ -1,0 +1,42 @@
+<div class="container" ng-init="getOrderedItems()">
+    <div class="row">
+        <br /><br />
+        <div class="col-md-12 alert alert-success"  ng-show="getTotalOrderedCount() > 0">
+            <strong>Success!</strong> Your Order Placed Successfully. You will receive a varification message / call shortly.
+        </div>
+        <div class="col-md-8">
+            <table class="table table-bordered">
+                <!-- header -->
+                <tr class="well">
+                    <td><b>Sr. No.</b></td>
+                    <td><b>Item</b></td>
+                    <td class="tdCenter"><b>Quantity</b></td>
+                    <td class="tdRight"><b>Price</b></td>
+                </tr>
+                 <!-- empty cart message -->
+                <tr ng-hide="getTotalOrderedCount() > 0" >
+                    <td class="text-center" colspan="4">
+                       No Order Found.
+                    </td>
+                </tr>
+                <tr ng-repeat="item in orderedItems | orderBy:'name'">
+                    <td>{{$index+1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td class="tdRight">{{item.price * item.quantity | currency}}</td>
+                </tr>
+                <!-- footer -->
+                <tr class="well">
+                    <td colspan="2"><b>Total</b></td>
+                    <td class="tdCenter"><b>{{getTotalOrderedCount()}}</b></td>
+                    <td class="tdRight"><b>{{getTotalOrderedPrice() | currency}}</b></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-4 text-center">
+            <img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" alt="Trust with PayPal"/>
+            <img src="https://account.authorize.net/UI/themes/anet/images/logo.gif" alt="Trudst with autherize.net"/>
+        </div>
+    </div>
+</div>
+<!-- /.container -->

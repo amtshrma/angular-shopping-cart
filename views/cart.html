@@ -1,0 +1,84 @@
+<div class="container">
+    <div class="row">
+        <br /><br />
+    <p class="text-info">Thanks for shopping at the Angular Store. This is your shopping cart. Here you can edit the items, go back to the store, clear the cart, or check out.</p>
+    <br /><br />
+        <div class="col-md-9">
+            <table class="table table-bordered">
+                <!-- header -->
+                <tr class="well">
+                    <td><b>Item</b></td>
+                    <td class="tdCenter"><b>Quantity</b></td>
+                    <td class="tdRight"><b>Price</b></td>
+                    <td />
+                </tr>
+                <!-- empty cart message -->
+                <tr ng-hide="getTotalCount() > 0" >
+                    <td class="tdCenter" colspan="4">
+                        Your cart is empty.
+                    </td>
+                </tr>
+                <!-- cart items -->
+                <tr ng-repeat="item in cartItems | orderBy:'name'">
+                    <td>{{item.name}}</td>
+                    <td class="tdCenter">
+                      <div class="input-append">
+                        <!-- use type=tel instead of  to prevent spinners -->
+                        <input
+                            class="span3 text-center" type="tel" 
+                            ng-model="item.quantity" 
+                            ng-change="cart.saveItems()" />
+                        <button 
+                            class="btn btn-success" type="button" 
+                            ng-disabled="item.quantity >= 1000"
+                            ng-click="addProductToCart(item.sku, item.name, item.price, +1)">+</button>
+                        <button 
+                            class="btn btn-inverse" type="button" 
+                            ng-disabled="item.quantity <= 1"
+                            ng-click="addProductToCart(item.sku, item.name, item.price, -1)">-</button>
+                      </div>
+                    </td>
+                    <td class="tdRight">{{item.price * item.quantity | currency}}</td>
+                    <td class="tdCenter" title="remove from cart">
+                        <a href="" ng-click="cart.addItem(item.sku, item.name, item.price, -10000000)" >
+                            <i class="icon-remove" />
+                        </a>
+                    </td>
+                </tr>
+
+                <!-- footer -->
+                <tr class="well">
+                    <td><b>Total</b></td>
+                    <td class="tdCenter"><b>{{getTotalCount()}}</b></td>
+                    <td class="tdRight"><b>{{getTotalPrice() | currency}}</b></td>
+                    <td />
+                </tr>
+            </table>
+        </div>
+
+        <!-- buttons -->
+        <div class="col-md-3">
+            <p class="text-info">
+                <a class="btn btn-block btn-primary" href="#/products"><i class="icon-chevron-left" /> Continue Shopping</a>
+                <a class="btn btn-block btn-danger" ng-click="clearItems()" ng-disabled="getTotalCount() < 1" ><i class="icon-trash icon-white" /> Empty Cart</a>
+            </p>
+
+            <br /><br />
+
+            <p class="text-info">
+                <a class="btn btn-block btn-primary" ng-click="checkoutPayPal()" ng-disabled="getTotalCount() < 1"><i class="icon-ok icon-white" /> Pay Using PayPal</a>
+            </p>
+
+            <br /><br />
+
+            <p class="text-info">
+                <button 
+                    class="btn btn-block btn-link"
+                    ng-click="cart.checkout('PayPal')"
+                    ng-disabled="cart.getTotalCount() < 1" >
+                    <img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" alt="checkout PayPal"/>
+                </button>    
+            </p>
+        </div>
+    </div>
+</div>
